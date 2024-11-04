@@ -1,0 +1,31 @@
+# see README.txt for info
+
+version: '3.8'
+services:
+  tomcat-10-1-31-jdk17_v1:
+    image: tomcat:10.1-jdk17
+    ports:
+      #     expose tomcat port 8080(container) on host as port 8888(host)
+      - "8888:8080"
+      #     expose java debugging port 5005 on host as port 5005  (HOST:CONTAINER)
+      - "5005:5005"
+    command: "bash /tmp/start_tomcat.sh"
+    volumes:
+      #     "host path to the directory with .war file" / "container tomcat directory with webapps"
+      - "./target:/usr/local/tomcat/webapps"
+      - "./docker_confs/tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml"
+      - "./docker_confs/tomcat/tomcat-manager-context.xml:/tmp/tomcat-manager-context.xml"
+      - "./docker_confs/tomcat/start_tomcat.sh:/tmp/start_tomcat.sh"
+    environment:
+      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+#      JAVA_OPTS: "JAVA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+  pgsql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: passABC
+    volumes:
+      #- pgdata:/var/lib/postgresql/data
+      - "./docker_confs/pgsql/pracownicy.sql:/tmp/pracownicy.sql"
+      - "./docker_confs/pgsql/init_db.sh:/docker-entrypoint-initdb.d/init-db.sh"
