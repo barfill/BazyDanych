@@ -37,4 +37,9 @@ public class Person {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" + "id=" + id + ", name='" + name + '\'' + ", surname='" + surname + '\'' + ", position=" + position.getName() + '}';
+    }
 }

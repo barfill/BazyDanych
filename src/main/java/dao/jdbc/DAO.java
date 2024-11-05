@@ -63,13 +63,13 @@ public class  DAO implements dao.DAO {
     }
 
     @Override
-    public List<Person> getPersonsByName() {
-        return personDAO.getPersonsByName();
+    public List<Person> getPersonsByName(String name) {
+        return personDAO.getPersonsByName(name);
     }
 
     @Override
-    public List<Person> getPersonsBySurname() {
-        return personDAO.getPersonsBySurname();
+    public List<Person> getPersonsBySurname(String surname) {
+        return personDAO.getPersonsBySurname(surname);
     }
 
     @Override

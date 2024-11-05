@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface PersonDAO {
     List<Person> getAllPersons();
-    List<Person> getPersonsByName();
-    List<Person> getPersonsBySurname();
+    List<Person> getPersonsByName(String name);
+    List<Person> getPersonsBySurname(String surname);
     Person getPerson(int id);
     int update(Person p);
     int insert(Person p);
