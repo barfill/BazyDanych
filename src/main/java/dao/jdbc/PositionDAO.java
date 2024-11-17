@@ -213,7 +213,7 @@ public class PositionDAO implements dao.PositionDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+//    test
         return rowsUpdated;
     }
 }
