@@ -5,7 +5,7 @@ public class Position {
     private String name;
 
     public Position() {
-        this.id = -1;
+        this.id = 0;
         this.name = "";
     }
 
