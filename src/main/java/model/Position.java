@@ -4,6 +4,16 @@ public class Position {
     private int id;
     private String name;
 
+    public Position() {
+        this.id = -1;
+        this.name = "";
+    }
+
+    public Position(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

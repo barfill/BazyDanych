@@ -6,6 +6,19 @@ public class Person {
     private String surname;
     private Position position;
 
+    public Person() {
+        this.id = 0;
+        this.name = "";
+        this.surname = "";
+    }
+
+    public Person(int id, String name, String surname, Position position) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.position = position;
+    }
+
     public int getId() {
         return id;
     }

@@ -180,16 +180,97 @@ public class PersonDAO implements dao.PersonDAO {
 
     @Override
     public int insert(Person p) {
-        return 0;
+        if(p == null || p.getId() == 0) {
+            throw new IllegalArgumentException("Osoba nie jest poprawnie zainicjalizowana.");
+        }
+
+        String query = "INSERT INTO pracownik(imie, nazwisko, stanowisko) values (?, ? ,?)";
+        int rowsUpdated = 0;
+
+        try (Connection con = getConnection();
+            PreparedStatement pstm = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) { //tutaj umożliwiam generowanie autoatmycznych kluczy takich jak przy auto-increment czy właśnie użytym serial
+
+            pstm.setString(1,p.getName());
+            pstm.setString(2,p.getSurname());
+            pstm.setInt(3,p.getPosition().getId());
+
+            rowsUpdated = pstm.executeUpdate();
+
+            if(rowsUpdated == 0) {
+                throw  new SQLException("Nie udało się dodać rekordu.");
+            }
+
+            try(ResultSet generatedKey = pstm.getGeneratedKeys()) {
+                if(generatedKey.next()) {
+                    int generatedId = generatedKey.getInt(1);
+                    p.setId(generatedId);
+                    return generatedId;
+                } else {
+                    throw new SQLException("Nie udalo sie pobrac ID dla nowegoo rekordu");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsUpdated;
     }
 
     @Override
     public int delete(Person p) {
-        return 0;
+        if(p == null || p.getId() == 0) {
+            throw new IllegalArgumentException("Osoba nie jest poprawnie zainicjalizowana.");
+        }
+
+        String query = "DELETE FROM pracownik WHERE id=? and imie=? and nazwisko=? and stanowisko=?";
+        int rowsUpdated = 0;
+
+        try(Connection con = getConnection();
+            PreparedStatement pstm = con.prepareStatement(query)){
+
+            pstm.setInt(1,p.getId());
+            pstm.setString(2,p.getName());
+            pstm.setString(3,p.getSurname());
+            pstm.setInt(4,p.getPosition().getId());
+
+            rowsUpdated = pstm.executeUpdate();
+
+            if(rowsUpdated == 0) {
+                throw new SQLException("Taki pracownik nie istnieje w naszym systemie");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsUpdated;
     }
 
     @Override
     public int deletePerson(int id) {
-        return 0;
+        if(id == 0) {
+            throw new IllegalArgumentException("Osoba nie jest poprawnie zainicjalizowana.");
+        }
+
+        String query = "DELETE FROM pracownik WHERE id=?";
+        int rowsUpdated = 0;
+
+        try(Connection con = getConnection();
+            PreparedStatement pstm = con.prepareStatement(query)){
+
+            pstm.setInt(1,id);
+
+            rowsUpdated = pstm.executeUpdate();
+
+            if(rowsUpdated == 0) {
+                throw new SQLException("Pracownik o tkaim ID nie istnieje w naszym systemie");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsUpdated;
     }
 }
