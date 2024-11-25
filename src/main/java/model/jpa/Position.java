@@ -2,9 +2,15 @@ package model.jpa;
 
 import jakarta.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "PositionGetAll", query="SELECT pos FROM Position pos"),
+        @NamedQuery(name = "PositionGetByName", query = "SELECT pos FROM Position pos WHERE pos.name =: name"),
+        @NamedQuery(name = "PositionDeleteById", query = "DELETE FROM Position pos WHERE pos.id =: id")
+})
+
 @Entity
 @Table(name = "stanowisko")
-public class Position {
+public class Position extends model.Position {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stanowisko_id_gen")
     @SequenceGenerator(name = "stanowisko_id_gen", sequenceName = "stanowisko_id_seq", allocationSize = 1)

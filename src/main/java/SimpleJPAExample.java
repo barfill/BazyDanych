@@ -1,3 +1,4 @@
+import dao.jpa.PositionDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -12,6 +13,7 @@ import java.util.List;
 public class SimpleJPAExample {
 
     public static void main(String[] args) {
+        /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("appdb");
         EntityManager em = emf.createEntityManager();
         Position position = em.find(Position.class, 1);
@@ -24,7 +26,7 @@ public class SimpleJPAExample {
             System.out.println(j.getName());
             System.out.println(j.getId());
 
-            for(Person per : j.getMembers()) {
+            for(model.Person per : j.getMembers()) {
                 System.out.println(per.getName() + " "+per.getSurname());
             }
         }
@@ -50,6 +52,64 @@ public class SimpleJPAExample {
         em.getTransaction().commit();
         em.close();
         emf.close();
+         */
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("appdb");
+        EntityManager em = emf.createEntityManager();
+
+        PositionDAO jpaDao = new PositionDAO(em);
+
+//        for(model.Position p : jpaDao.getAllPositions()) {
+//            System.out.println(p.getName());
+//        }
+//
+//        model.Position pracownikPhy = jpaDao.getPosition(4);
+//        pracownikPhy.setName("fizycznyy");
+
+//        em.getTransaction().begin();
+//        jpaDao.update(pracownikPhy);
+//        em.getTransaction().commit();
+
+
+//        Position wozny = new Position();
+//        wozny.setName("wozny");
+//
+//
+//        em.getTransaction().begin();
+//        jpaDao.update(wozny);
+//        em.getTransaction().commit();
+
+//        jpaDao.getPositionByName("wozny");
+//
+//        em.getTransaction().begin();
+//        jpaDao.delete(wozny);
+//        em.getTransaction().commit();
+
+//
+//        em.getTransaction().begin();
+//        jpaDao.deletePosition(13);
+//        em.getTransaction().commit();
+//
+//        for(model.Position p : jpaDao.getPositionByName("developer")) {
+//            System.out.println(p.getId());
+//        };
+        model.Position pracownik7 = jpaDao.getPosition(7);
+
+        em.getTransaction().begin();
+        jpaDao.delete(pracownik7);
+        em.getTransaction().commit();
+
+        model.Position deletedPosition = jpaDao.getPosition(7);
+        if (deletedPosition == null) {
+            System.out.println("Pozycja została usunięta.");
+        } else {
+            System.out.println("Pozycja nadal istnieje.");
+        }
+
+        em.close();
+        emf.close();
+
+
     }
 
     //persist nie zwraca żadnej wartości tylko używam gdy chce dodać jakiś nowe nieistniejący w bazce obiekt nie aktualizuje istniejących!!!

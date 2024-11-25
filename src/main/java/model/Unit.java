@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Unit {
-    private int id;
+    private Integer id;
     private String name;
     private List<Person> members = new ArrayList<>();
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -1,7 +1,7 @@
 package model;
 
 public class Person {
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private Position position;
@@ -19,7 +19,7 @@ public class Person {
         this.position = position;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

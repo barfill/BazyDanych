@@ -2,12 +2,13 @@ package model.jpa;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 @Entity
 @Table(name = "jednostka")
-public class Unit {
+public class Unit extends model.Unit{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jednostka_id_gen")
     @SequenceGenerator(name = "jednostka_id_gen", sequenceName = "jednostka_id_seq", allocationSize = 1)
@@ -39,12 +40,15 @@ public class Unit {
         this.name = name;
     }
 
-    public List<Person> getMembers() {
-        return members;
+    public List<model.Person> getMembers() {
+        return new ArrayList<model.Person>(members);
     }
 
-    public void setMembers(List<Person> members) {
-        this.members = members;
+    public void setMembers(List<model.Person> members) {
+        this.members = new ArrayList<>();
+        for (model.Person member : members) {
+            this.members.add((model.jpa.Person) member);
+        }
     }
 
 }

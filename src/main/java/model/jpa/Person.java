@@ -6,9 +6,15 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+@NamedQueries({
+        @NamedQuery(name = "PersonsGetAll", query="SELECT p FROM Person p"),
+        @NamedQuery(name = "PersonGetByName", query = "SELECT p FROM Person p WHERE p.name =: name"),
+        @NamedQuery(name = "PersonGetBySurname", query = "SELECT p FROM Person p WHERE p.surname =: surname")
+})
+
 @Entity
 @Table(name = "pracownik")
-public class Person {
+public class Person extends model.Person {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pracownik_id_gen")
     @SequenceGenerator(name = "pracownik_id_gen", sequenceName = "pracownik_id_seq", allocationSize = 1)
