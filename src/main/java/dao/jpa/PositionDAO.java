@@ -50,6 +50,7 @@ public class PositionDAO implements dao.PositionDAO {
         Query query = em.createQuery("UPDATE Person p SET p.position = NULL WHERE p.position = :position");
         query.setParameter("position", p);
         query.executeUpdate();
+        //To jest usuniecie powiązać do danej pozycji w innych tabelach, bez tego nie da się usunać pozycji która jest powiązana
 
         em.remove(p);
         return p.getId();
@@ -57,6 +58,11 @@ public class PositionDAO implements dao.PositionDAO {
 
     @Override
     public int deletePosition(int id) {
+        Query query = em.createQuery("UPDATE Person p SET p.position = NULL WHERE p.position.id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+        //To jest usuniecie powiązać do danej pozycji w innych tabelach, bez tego nda się usunać pozycje która jest powiązana ale lepiej tutaj też usuwac żeby nie było konfliktów, że osoba ma przypisaną pozycję o niestniejącym ID
+
         Query qn = em.createNamedQuery("PositionDeleteById");
         qn.setParameter("id", id);
         int result = qn.executeUpdate();

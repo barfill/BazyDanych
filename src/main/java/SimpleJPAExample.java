@@ -1,14 +1,10 @@
+import dao.jpa.PersonDAO;
 import dao.jpa.PositionDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import model.jpa.Person;
+import model.Person;
 import model.jpa.Position;
-import model.jpa.Unit;
-
-import java.lang.reflect.Member;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SimpleJPAExample {
 
@@ -64,47 +60,101 @@ public class SimpleJPAExample {
 //        }
 //
 //        model.Position pracownikPhy = jpaDao.getPosition(4);
-//        pracownikPhy.setName("fizycznyy");
-
+//        pracownikPhy.setName("fizyczny");
+//
 //        em.getTransaction().begin();
 //        jpaDao.update(pracownikPhy);
 //        em.getTransaction().commit();
 
 
-//        Position wozny = new Position();
-//        wozny.setName("wozny");
+//        model.jpa.Position sprzataczka = new Position();
+//        sprzataczka.setName("sprzataczka");
+//
 //
 //
 //        em.getTransaction().begin();
-//        jpaDao.update(wozny);
+//        jpaDao.insert(sprzataczka);
 //        em.getTransaction().commit();
-
+//
 //        jpaDao.getPositionByName("wozny");
 //
 //        em.getTransaction().begin();
-//        jpaDao.delete(wozny);
+//        jpaDao.deletePosition(jpaDao.getPosition(19).getId());
 //        em.getTransaction().commit();
 
-//
+
 //        em.getTransaction().begin();
-//        jpaDao.deletePosition(13);
+//        jpaDao.deletePosition(18);
 //        em.getTransaction().commit();
 //
 //        for(model.Position p : jpaDao.getPositionByName("developer")) {
 //            System.out.println(p.getId());
 //        };
-        model.Position pracownik7 = jpaDao.getPosition(7);
+//        model.Position pracownik7 = jpaDao.getPosition(7);
+//
+//        em.getTransaction().begin();
+//        jpaDao.delete(pracownik7);
+//        em.getTransaction().commit();
+//
+//        model.Position deletedPosition = jpaDao.getPosition(7);
+//        if (deletedPosition == null) {
+//            System.out.println("Pozycja została usunięta.");
+//        } else {
+//            System.out.println("Pozycja nadal istnieje.");
+//        }
 
-        em.getTransaction().begin();
-        jpaDao.delete(pracownik7);
-        em.getTransaction().commit();
+        PersonDAO jpaPersonDAO = new PersonDAO(em);
 
-        model.Position deletedPosition = jpaDao.getPosition(7);
-        if (deletedPosition == null) {
-            System.out.println("Pozycja została usunięta.");
-        } else {
-            System.out.println("Pozycja nadal istnieje.");
-        }
+//        for(Person p : jpaPersonDAO.getAllPersons()) {
+//            System.out.println(p.getName());
+//        }
+//        for(Person p : jpaPersonDAO.getPersonsByName("Halina")) {
+//            System.out.println(p.getId()+" "+p.getName());
+//        }
+//        for(Person p : jpaPersonDAO.getPersonsBySurname("Król")) {
+//            System.out.println(p.getId()+" "+p.getName());
+//        }
+//        model.jpa.Person jpaPerson = (model.jpa.Person) jpaPersonDAO.getPerson(6);
+//        System.out.println(jpaPerson.getId()+" "+jpaPerson.getName()+" "+jpaPerson.getSurname());
+
+//        Person bartosz = jpaPersonDAO.getPerson(6);
+//        bartosz.setName("Bartek");
+//
+//        em.getTransaction().begin();
+//        jpaPersonDAO.update(bartosz);
+//        em.getTransaction().commit();
+
+//        model.jpa.Person yoshi = new model.jpa.Person();
+//        yoshi.setName("Yoshi");
+//        yoshi.setSurname("Toranaga");
+//
+//        em.getTransaction().begin();
+//        jpaPersonDAO.insert(yoshi);
+//        em.getTransaction().commit();
+
+//        Person John = new Person(); - to nie działa bo klasa model.Person nie jest odpowiednio zmapowana z Hiberantem
+//        Person John = new model.jpa.Person();
+//        John.setName("John");
+//        John.setSurname("Blackthorne");
+//
+//        em.getTransaction().begin();
+//        jpaPersonDAO.insert(John);
+//        em.getTransaction().commit();
+
+//        Person wiktoriaCopy = jpaPersonDAO.getPerson(8);
+//        em.getTransaction().begin();
+//        jpaPersonDAO.delete(wiktoriaCopy);
+//        em.getTransaction().commit();
+//
+//        em.getTransaction().begin();
+//        jpaPersonDAO.deletePerson(11);
+//        em.getTransaction().commit();
+
+
+
+
+
+
 
         em.close();
         emf.close();
