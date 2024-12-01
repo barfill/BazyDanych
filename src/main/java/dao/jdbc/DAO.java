@@ -97,7 +97,7 @@ public class  DAO implements dao.DAO {
         return personDAO.deletePerson(id);
     }
 
-    //    int deletePosition(int id);
+//    int deletePosition(int id);
 //    int deletePerson(int id);
 
 }
